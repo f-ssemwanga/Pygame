@@ -81,9 +81,12 @@ while running:
     all_sprites.update()
     #draw / render
     screen.fill(mApp.bgColor)
+    #draw the background image onto the screen
+    screen.blit(background,background_rect)
     all_sprites.draw(screen)
     #always do this afer drawing everying
     pygame.display.flip()
 
 #terminate the game window and close everything up
 pygame.quit()
+ 
