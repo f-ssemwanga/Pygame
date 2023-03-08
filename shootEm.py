@@ -65,6 +65,7 @@ while running:
 
     #respawn mobs destroyed by bullets
     for hit in hits:
+        mApp.score +=1
         m = player_Enemy_Classes.Mob(mob_img ) 
         all_sprites.add(m)
         mobs.add(m)
@@ -84,9 +85,11 @@ while running:
     #draw the background image onto the screen
     screen.blit(background,background_rect)
     all_sprites.draw(screen)
+     #draw the score here
+    mApp.draw_text(screen,str(mApp.score),18,mApp.width/2,10)
     #always do this afer drawing everying
     pygame.display.flip()
-
+ 
 #terminate the game window and close everything up
 pygame.quit()
  
