@@ -11,6 +11,9 @@ WIDTH = 480
 HEIGHT = 600
 FPS = 60    #fast and smooth
 clock = pygame.time.Clock() #handles the speed
+font_name = pygame.font.match_font('arial')#search for a maching font
+score =0
+
 
 
 
@@ -24,9 +27,16 @@ class MainApp():
         self.fps = FPS    #fast and smooth
         self.bgColor =BLACK
         self.gameClock = clock
+        self.score = score
         #now create the window
         self.screen = pygame.display.set_mode((WIDTH,HEIGHT))
-       
+    def draw_text(self,surf,text,size, x,y):
+        #create a font object
+        font = pygame.font.Font(font_name,size) # this will create text
+        text_surface = font.render(text,True,WHITE) # True is for anti aliasing
+        text_rect = text_surface.get_rect() #get the rectangle for the text
+        text_rect.midtop = (x,y) #put x,y at the midtop of the rectangle
+        surf.blit(text_surface, text_rect)
         
 #Bullet class
 class Bullet(pygame.sprite.Sprite):
@@ -123,3 +133,4 @@ class Mob(pygame.sprite.Sprite):
             self.rect.x = random.randrange(0, WIDTH - self.rect.width) #appears within the limits of the screen
             self.rect.y = random.randrange(-100,-40) #this is off the screen
             self.speedy = random.randrange(1, 8)
+    
