@@ -26,12 +26,19 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Shoot them up")
 clock = pygame.time.Clock() #handles the speed
 
-#create a sprite group
+#create a player sprite group
 all_sprites = pygame.sprite.Group()
-
+#create enemy/mob sprite group
+mobs = pygame.sprite.Group()
 #create player object
 player = player_Enemy_Classes.Player(WIDTH,HEIGHT,GREEN)
 all_sprites.add(player)
+
+#create and spawn enemy object
+for i in range(8):
+    m = player_Enemy_Classes.Mob(WIDTH,HEIGHT,RED)
+    all_sprites.add(m)
+    mobs.add(m)
 #Game loop
 running = True
 while running:
