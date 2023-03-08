@@ -1,6 +1,7 @@
 #Shoot them up game
 import pygame
 import random
+import player_Enemy_Classes
 
 #Tell pygame to create a window
 WIDTH = 480
@@ -25,6 +26,12 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Shoot them up")
 clock = pygame.time.Clock() #handles the speed
 
+#create a sprite group
+all_sprites = pygame.sprite.Group()
+
+#create player object
+player = player_Enemy_Classes.Player(WIDTH,HEIGHT,GREEN)
+all_sprites.add(player)
 #Game loop
 running = True
 while running:
@@ -39,10 +46,10 @@ while running:
 
 
     #update
-    
+    all_sprites.update()
     #draw / render
     screen.fill(BLACK)
-    
+    all_sprites.draw(screen)
     #always do this afer drawing everying
     pygame.display.flip()
 
