@@ -1,10 +1,33 @@
 import pygame
 import random
+
 #constants
 WHITE = (255,255,255)
+BLACK = (0,0,0)
 RED = (255,0,0)
 GREEN = (0,255,0)
 BLUE = (0,0,255)
+WIDTH = 480
+HEIGHT = 600
+FPS = 60    #fast and smooth
+clock = pygame.time.Clock() #handles the speed
+
+
+
+
+#Main app handler
+class MainApp():
+    def __init__(self):
+        #Tell pygame to create a window
+        self.width = WIDTH
+        self.height = HEIGHT
+        self.fps = FPS    #fast and smooth
+        self.bgColor =BLACK
+        self.gameClock = clock
+        #now create the window
+        self.screen = pygame.display.set_mode((WIDTH,HEIGHT))
+       
+        
 #Bullet class
 class Bullet(pygame.sprite.Sprite):
     def __init__(self,x,y,spgroup):
@@ -26,17 +49,17 @@ class Bullet(pygame.sprite.Sprite):
 
 #player class
 class Player(pygame.sprite.Sprite):
-    def __init__(self,width,height,spgroup,bspgroup):
+    def __init__(self,spgroup,bspgroup,player_img):
         pygame.sprite.Sprite.__init__(self)
-        self.WIDTH = width
-        self.HEIGHT = height
         self.spgroup = spgroup
         self.bspgroup = bspgroup
-        self.image =pygame.Surface((50,40))
-        self.image.fill(GREEN)
+        #self.image =pygame.Surface((50,40))
+        #self.image.fill(GREEN)
+        '''Load image ad scale it using the transform methods'''
+        self.image = pygame.transform.scale(player_img,(50,38))
         self.rect = self.image.get_rect()
-        self.rect.centerx = self.WIDTH/2     # puts it in centre of the screen
-        self.rect.bottom = self.HEIGHT-10    # puts it 10px from bottom of screen
+        self.rect.centerx = WIDTH/2     # puts it in centre of the screen
+        self.rect.bottom = HEIGHT-10    # puts it 10px from bottom of screen
         #it needs to move side to side so we need speed
         self.speedx = 0
 
@@ -53,8 +76,8 @@ class Player(pygame.sprite.Sprite):
         self.rect.x += self.speedx      # move at speed to be set by controls
 
         #constrain the object within the width of the screen
-        if self.rect.right > self.WIDTH:
-            self.rect.right = self.WIDTH
+        if self.rect.right > WIDTH:
+            self.rect.right = WIDTH
         if self.rect.left < 0:
             self.rect.left = 0
             
@@ -68,16 +91,15 @@ class Player(pygame.sprite.Sprite):
         self.bspgroup.add(bullet)
 class Mob(pygame.sprite.Sprite):
     #enemy mobile object which inherits from the sprite
-    def __init__(self,width,height):
+    def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.WIDTH = width
-        self.HEIGHT = height
+        
         self.image = pygame.Surface((30,40))
         self.image.fill(RED)
         self.rect = self.image.get_rect()
 
         #make the enemy spawn off top of the screen to appear off the screen and then start dropping down
-        self.rect.x = random.randrange(0, self.WIDTH - self.rect.width) #appears within the limits of the screen
+        self.rect.x = random.randrange(0, WIDTH - self.rect.width) #appears within the limits of the screen
         self.rect.y = random.randrange(-100,-40) #this is off the screen
         self.speedy = random.randrange(1, 8)
 
@@ -85,7 +107,7 @@ class Mob(pygame.sprite.Sprite):
         #move downwards
         self.rect.y += self.speedy
         #deal with enemy when they get to bottom of the screen
-        if self.rect.top > self.HEIGHT +10:
-            self.rect.x = random.randrange(0, self.WIDTH - self.rect.width) #appears within the limits of the screen
+        if self.rect.top > HEIGHT +10:
+            self.rect.x = random.randrange(0, WIDTH - self.rect.width) #appears within the limits of the screen
             self.rect.y = random.randrange(-100,-40) #this is off the screen
             self.speedy = random.randrange(1, 8)
