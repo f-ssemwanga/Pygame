@@ -32,13 +32,13 @@ all_sprites = pygame.sprite.Group()
 mobs = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
 #create player object
-player = player_Enemy_Classes.Player(all_sprites,bullets,player_img)
+player = player_Enemy_Classes.Player(all_sprites,bullets,player_img,bullet_img)
 all_sprites.add(player)
 
 #create and spawn enemy object
 for i in range(8):
     m = player_Enemy_Classes.Mob()
-    all_sprites.add(m)
+    all_sprites.add(m) 
     mobs.add(m)
 #create a bullet object
 

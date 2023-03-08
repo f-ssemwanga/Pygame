@@ -30,11 +30,13 @@ class MainApp():
         
 #Bullet class
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self,x,y,spgroup):
+    def __init__(self,x,y,spgroup,bullet_img):
         # x and y and respawn positions based on the player's position
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((10,20))
-        self.image.fill(BLUE)
+        #self.image = pygame.Surface((10,20))
+        #self.image.fill(BLUE)
+        self.image = pygame.transform.scale(bullet_img,(10,20))
+        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         #set re-spawn position to right infront of the player
         self.rect.bottom = y
@@ -49,10 +51,11 @@ class Bullet(pygame.sprite.Sprite):
 
 #player class
 class Player(pygame.sprite.Sprite):
-    def __init__(self,spgroup,bspgroup,player_img):
+    def __init__(self,spgroup,bspgroup,player_img,bullet_img):
         pygame.sprite.Sprite.__init__(self)
         self.spgroup = spgroup
         self.bspgroup = bspgroup
+        self.bulletImg = bullet_img
         #self.image =pygame.Surface((50,40))
         #self.image.fill(GREEN)
         '''Load image ad scale it using the transform methods'''
@@ -84,7 +87,7 @@ class Player(pygame.sprite.Sprite):
     def shoot(self):
         #spawns new bullet at centrex of player
         #y will spawn at the top - i.e.bottom of the bullet at the top of the player
-        bullet = Bullet(self.rect.centerx,self.rect.top,self.spgroup)
+        bullet = Bullet(self.rect.centerx,self.rect.top,self.spgroup,self.bulletImg)
         #add bullet to all sprites group so that its updated
         self.spgroup.add(bullet)
         #add bullet to the bullets sprite group
