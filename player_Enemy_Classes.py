@@ -94,11 +94,13 @@ class Player(pygame.sprite.Sprite):
         self.bspgroup.add(bullet)
 class Mob(pygame.sprite.Sprite):
     #enemy mobile object which inherits from the sprite
-    def __init__(self):
+    def __init__(self,mob_img):
         pygame.sprite.Sprite.__init__(self)
-        
-        self.image = pygame.Surface((30,40))
-        self.image.fill(RED)
+        self.mImage = mob_img
+        #self.image = pygame.Surface((30,40))
+        #self.image.fill(RED)
+        self.image = pygame.transform.scale(mob_img,(30,40))
+        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
 
         #make the enemy spawn off top of the screen to appear off the screen and then start dropping down

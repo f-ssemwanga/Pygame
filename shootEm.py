@@ -37,7 +37,7 @@ all_sprites.add(player)
 
 #create and spawn enemy object
 for i in range(8):
-    m = player_Enemy_Classes.Mob()
+    m = player_Enemy_Classes.Mob(mob_img)
     all_sprites.add(m) 
     mobs.add(m)
 #create a bullet object
@@ -65,7 +65,7 @@ while running:
 
     #respawn mobs destroyed by bullets
     for hit in hits:
-        m = player_Enemy_Classes.Mob()
+        m = player_Enemy_Classes.Mob(mob_img)
         all_sprites.add(m)
         mobs.add(m)
 
