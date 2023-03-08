@@ -2,38 +2,42 @@
 import pygame
 import random
 import player_Enemy_Classes
+from os import path
+'''
+- dealing with images
+- load all game graphics
+- convert() methods will draw the image in memory before it is displyed  which is
+- much faster than drawng it in real time i.e. pixel by pixel'''
+img_dir = path.join(path.dirname(__file__),'img') #img is the folder where the graphics are
+#to place the image somewhere, make a rect for it
 
-#Tell pygame to create a window
-WIDTH = 480
-HEIGHT = 600
-FPS = 60    #fast and smooth
-
-#define colours
-
-BLACK = (0,0,0)
-
-
+mApp = player_Enemy_Classes.MainApp() #moved some variables into the classes module
 
 #initialise common pygame objects
 pygame.init()
 pygame.mixer.init() #this is required if you are going to do sound
 
 #now create the window
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = mApp.screen
 pygame.display.set_caption("Shoot them up")
-clock = pygame.time.Clock() #handles the speed
 
+#load other image
+background = pygame.image.load(path.join(img_dir,"starfield.png")).convert()
+player_img = pygame.image.load(path.join(img_dir, "spaceShip.png")).convert()
+bullet_img = pygame.image.load(path.join(img_dir, "spaceMissile.png")).convert()
+mob_img = pygame.image.load(path.join(img_dir, "spaceMeteor.png")).convert()
+background_rect = background.get_rect()
 #create a player emeny and bullet sprite group
 all_sprites = pygame.sprite.Group()
 mobs = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
 #create player object
-player = player_Enemy_Classes.Player(WIDTH,HEIGHT,all_sprites,bullets)
+player = player_Enemy_Classes.Player(all_sprites,bullets,player_img)
 all_sprites.add(player)
 
 #create and spawn enemy object
 for i in range(8):
-    m = player_Enemy_Classes.Mob(WIDTH,HEIGHT)
+    m = player_Enemy_Classes.Mob()
     all_sprites.add(m)
     mobs.add(m)
 #create a bullet object
@@ -42,7 +46,7 @@ for i in range(8):
 running = True
 while running:
     #keep the game running at the right speed
-    clock.tick(FPS)
+    mApp.gameClock.tick(mApp.fps)
     #process input (events)
     for event in pygame.event.get():
         #check event for closing the window
@@ -61,7 +65,7 @@ while running:
 
     #respawn mobs destroyed by bullets
     for hit in hits:
-        m = player_Enemy_Classes.Mob(WIDTH,HEIGHT)
+        m = player_Enemy_Classes.Mob()
         all_sprites.add(m)
         mobs.add(m)
 
@@ -76,7 +80,7 @@ while running:
     #update
     all_sprites.update()
     #draw / render
-    screen.fill(BLACK)
+    screen.fill(mApp.bgColor)
     all_sprites.draw(screen)
     #always do this afer drawing everying
     pygame.display.flip()
