@@ -60,7 +60,11 @@ class Player(pygame.sprite.Sprite):
         #self.image.fill(GREEN)
         '''Load image ad scale it using the transform methods'''
         self.image = pygame.transform.scale(player_img,(50,38))
+        self.image.set_colorkey(BLACK) # removes black rectangle around image
         self.rect = self.image.get_rect()
+        
+        self.radius = 21
+        
         self.rect.centerx = WIDTH/2     # puts it in centre of the screen
         self.rect.bottom = HEIGHT-10    # puts it 10px from bottom of screen
         #it needs to move side to side so we need speed
@@ -103,6 +107,9 @@ class Mob(pygame.sprite.Sprite):
         self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
 
+        self.radius = int(self.rect.width *0.9/2)
+        
+        
         #make the enemy spawn off top of the screen to appear off the screen and then start dropping down
         self.rect.x = random.randrange(0, WIDTH - self.rect.width) #appears within the limits of the screen
         self.rect.y = random.randrange(-100,-40) #this is off the screen
