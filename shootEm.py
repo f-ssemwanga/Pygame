@@ -65,12 +65,12 @@ while running:
 
     #respawn mobs destroyed by bullets
     for hit in hits:
-        m = player_Enemy_Classes.Mob(mob_img)
+        m = player_Enemy_Classes.Mob(mob_img ) 
         all_sprites.add(m)
         mobs.add(m)
 
-    # Check to see if a mob hit the playe r
-    hits = pygame.sprite.spritecollide(player,mobs,False) # parameters are object to check agaist and group against
+    # Check to see if a mob hit the player
+    hits = pygame.sprite.spritecollide(player,mobs,False, pygame.sprite.collide_circle) # parameters are object to check agaist and group against
     #FALSE indicates whether hit item in group should be deleted or not
     if hits:
         running = False
@@ -78,7 +78,7 @@ while running:
 
   
     #update
-    all_sprites.update()
+    all_sprites.update()   
     #draw / render
     screen.fill(mApp.bgColor)
     #draw the background image onto the screen
