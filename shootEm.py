@@ -52,9 +52,27 @@ while running:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 player.shoot()
+        #check if a bullet hits a mob
+        #you have to consider a group of bullets and a group of mobs
+        #using a pygame.sprite.groupcollide() method helps to collide two groups together
+        #Setting the last two parameters will delete the bullet and the mob which collide with each other
+        #notice that this will kill the mobs so there needs to be a way of respawning them if the get killed
+    hits = pygame.sprite.groupcollide(mobs,bullets,True,True)
+
+    #respawn mobs destroyed by bullets
+    for hit in hits:
+        m = player_Enemy_Classes.Mob(WIDTH,HEIGHT)
+        all_sprites.add(m)
+        mobs.add(m)
+
+    # Check to see if a mob hit the playe r
+    hits = pygame.sprite.spritecollide(player,mobs,False) # parameters are object to check agaist and group against
+    #FALSE indicates whether hit item in group should be deleted or not
+    if hits:
+        running = False
 
 
-
+  
     #update
     all_sprites.update()
     #draw / render
