@@ -10,11 +10,8 @@ FPS = 60    #fast and smooth
 
 #define colours
 
-WHITE = (255,255,255)
 BLACK = (0,0,0)
-RED = (255,0,0)
-GREEN = (0,255,0)
-BLUE = (0,0,255)
+
 
 
 #initialise common pygame objects
@@ -26,19 +23,21 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Shoot them up")
 clock = pygame.time.Clock() #handles the speed
 
-#create a player sprite group
+#create a player emeny and bullet sprite group
 all_sprites = pygame.sprite.Group()
-#create enemy/mob sprite group
 mobs = pygame.sprite.Group()
+bullets = pygame.sprite.Group()
 #create player object
-player = player_Enemy_Classes.Player(WIDTH,HEIGHT,GREEN)
+player = player_Enemy_Classes.Player(WIDTH,HEIGHT,all_sprites,bullets)
 all_sprites.add(player)
 
 #create and spawn enemy object
 for i in range(8):
-    m = player_Enemy_Classes.Mob(WIDTH,HEIGHT,RED)
+    m = player_Enemy_Classes.Mob(WIDTH,HEIGHT)
     all_sprites.add(m)
     mobs.add(m)
+#create a bullet object
+
 #Game loop
 running = True
 while running:
@@ -49,6 +48,10 @@ while running:
         #check event for closing the window
         if event.type == pygame.QUIT:
             running = False
+        # check if player has initiated a shoot action
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                player.shoot()
 
 
 
